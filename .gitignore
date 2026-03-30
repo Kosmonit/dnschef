@@ -18,6 +18,3 @@ ENV/
 
 # Local scratch / dumps
 _dump_code_/
-
-# Techinfo
-info/

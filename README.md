@@ -234,6 +234,8 @@ The excellent [dnslib library](https://bitbucket.org/paulc/dnslib/wiki/Home) is 
 
 DNSChef is capable of modifing queries for records of type "A", "AAAA", "MX", "CNAME", "NS", "TXT", "PTR", "NAPTR", "SOA", "ANY". It is very easy to expand or modify behavior for any record. Simply add another **if qtype == "RECORD TYPE")** entry and tell it what to reply with.
 
+!!! Some technical details about the architecture can be found in [architecture.md](info/architecture.md). !!!
+
 Enjoy the tool and forward all requests and comments to iphelix [at] thesprawl.org.
 
 Happy hacking!  
