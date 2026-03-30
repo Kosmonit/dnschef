@@ -1,1 +1,23 @@
+# Logs
 *.log
+log/
+
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+.venvroot/
+venv/
+ENV/
+
+# Editor / IDE
+.vscode/
+*.code-workspace
+
+# Local scratch / dumps
+_dump_code_/
+
+# Techinfo
+info/

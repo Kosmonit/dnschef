@@ -1,3 +1,18 @@
+Fork changelog
+==============
+
+Version 0.5 (2026-03-27)
+
+* Added structured NDJSON logging support via --logfile-json.
+* Added dnschefstat.py utility to build statistics from DNSChef JSON logs.
+* Improved proxy/reply handling and robustness for UDP/TCP upstream requests.
+* Other BUG-FIXES
+
+Upstream changelog (pre-fork)
+=============================
+
+Fork point: 2026-03-27
+
 Version 0.4
 
 * Ported to Python 3.6+

@@ -1,1 +1,3 @@
 [*] Run in MiTM mode and inject fake DNS responses.
+    NOTE: This is a legacy upstream wishlist item from the original authors.
+    It may not reflect the current fork roadmap.
