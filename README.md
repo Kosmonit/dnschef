@@ -63,7 +63,7 @@ Let's get a taste of DNSChef with its most basic monitoring functionality. Execu
 
 ```text
           _                _          __  
-         | | version 0.2  | |        / _| 
+         | | version 0.5  | |        / _| 
        __| |_ __  ___  ___| |__   ___| |_ 
       / _` | '_ \/ __|/ __| '_ \ / _ \  _|
      | (_| | | | \__ \ (__| | | |  __/ |  
@@ -184,6 +184,46 @@ Example workflow:
 
 ```bash
 ./dnschefstat.py -i dnslog.json -o dnslog_stats.txt
+```
+
+Example report output:
+
+```text
+============================================================
+================ DNSChef Statistics Report =================
+============================================================
+
+Total Queries: 91
+
+Clients:
+  - 192.168.200.3: 91 queries
+
+Query Types:
+  - A: 39
+  - HTTPS: 24
+  - AAAA: 23
+  - PTR: 5
+
+Query Types by Client:
+  [Client: 192.168.200.3]
+    - A: 39
+    - HTTPS: 24
+    - AAAA: 23
+    - PTR: 5
+
+Unique DNS Names and Resolutions (by Client):
+
+  [Client: 192.168.200.3]
+    - accounts.google.com -> 173.194.221.84
+    - android.clients.google.com -> 142.250.74.14, android.l.google.com.
+    - detectportal.firefox.com -> 34.107.221.82, detectportal.prod.mozaws.net.
+    - google.com -> 216.58.201.238
+    - mozilla.org -> 35.190.14.201
+    - registry.npmjs.org -> 104.16.0.34, 104.16.1.34, ...
+    - www.google.com -> 142.251.150.119, 142.251.151.119, ...
+    - www.reddit.com -> 151.101.1.140, reddit.map.fastly.net.
+
+============================================================
 ```
 
 ## Internal architecture
