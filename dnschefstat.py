@@ -78,48 +78,27 @@ def analyze_log(input_file):
     return stats
 
 def generate_report(stats):
-    report = []
-    report.append("=" * 60)
-    report.append(" DNSChef Statistics Report ".center(60, "="))
-    report.append("=" * 60)
-    
-    report.append(f"\nTotal Queries: {stats['total_queries']}")
-    
-    report.append("\nClients:")
-    for client, count in stats['clients'].most_common():
-        report.append(f"  - {client}: {count} queries")
-    if not stats['clients']:
-        report.append("  (none)")
+    client_qtypes = {}
+    for client in sorted(stats['client_qtypes'].keys()):
+        client_qtypes[client] = dict(stats['client_qtypes'][client].most_common())
 
-    report.append("\nQuery Types:")
-    for qtype, count in stats['qtypes'].most_common():
-        report.append(f"  - {qtype}: {count}")
-    if not stats['qtypes']:
-        report.append("  (none)")
+    client_resolutions = {}
+    for client in sorted(stats['client_resolutions'].keys()):
+        client_resolutions[client] = {}
+        for domain in sorted(stats['client_resolutions'][client].keys()):
+            resolutions = sorted(list(stats['client_resolutions'][client][domain]))
+            if resolutions:
+                client_resolutions[client][domain] = resolutions
 
-    report.append("\nQuery Types by Client:")
-    if not stats['client_qtypes']:
-        report.append("  (none)")
-    else:
-        for client in sorted(stats['client_qtypes'].keys()):
-            report.append(f"  [Client: {client}]")
-            for qtype, count in stats['client_qtypes'][client].most_common():
-                report.append(f"    - {qtype}: {count}")
+    report = {
+        "total_queries": stats['total_queries'],
+        "clients": dict(stats['clients'].most_common()),
+        "qtypes": dict(stats['qtypes'].most_common()),
+        "client_qtypes": client_qtypes,
+        "client_resolutions": client_resolutions
+    }
 
-    report.append("\nUnique DNS Names and Resolutions (by Client):")
-    if not stats['client_resolutions']:
-        report.append("  (no resolutions found)")
-    else:
-        for client in sorted(stats['client_resolutions'].keys()):
-            report.append(f"\n  [Client: {client}]")
-            client_res = stats['client_resolutions'][client]
-            for domain in sorted(client_res.keys()):
-                resolutions = sorted(list(client_res[domain]))
-                if resolutions:
-                    report.append(f"    - {domain} -> {', '.join(resolutions)}")
-
-    report.append("\n" + "=" * 60)
-    return "\n".join(report)
+    return json.dumps(report, ensure_ascii=False, indent=2)
 
 def main():
     parser = argparse.ArgumentParser(description="Generate statistics from DNSChef JSON log.")
