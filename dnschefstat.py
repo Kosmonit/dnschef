@@ -8,6 +8,7 @@ from collections import Counter, defaultdict
 def analyze_log(input_file):
     stats = {
         'total_queries': 0,
+        'queried_domains': Counter(),
         'clients': Counter(),
         'qtypes': Counter(),
         'client_qtypes': defaultdict(Counter),
@@ -34,12 +35,15 @@ def analyze_log(input_file):
                     stats['total_queries'] += 1
                     client = record.get('client')
                     qtype = record.get('qtype')
+                    qname = record.get('qname')
                     if client:
                         stats['clients'][client] += 1
                     if qtype:
                         stats['qtypes'][qtype] += 1
                     if client and qtype:
                         stats['client_qtypes'][client][qtype] += 1
+                    if qname:
+                        stats['queried_domains'][qname] += 1
 
                 elif action == 'proxy':
                     client = record.get('client')
@@ -90,8 +94,12 @@ def generate_report(stats):
             if resolutions:
                 client_resolutions[client][domain] = resolutions
 
+    queried_domains = {domain: stats['queried_domains'][domain]
+                       for domain in sorted(stats['queried_domains'].keys())}
+
     report = {
         "total_queries": stats['total_queries'],
+        "queried_domains": queried_domains,
         "clients": dict(stats['clients'].most_common()),
         "qtypes": dict(stats['qtypes'].most_common()),
         "client_qtypes": client_qtypes,
